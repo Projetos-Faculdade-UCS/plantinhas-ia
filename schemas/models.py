@@ -1,13 +1,21 @@
 from pydantic import BaseModel, Field
 from typing import List, Literal
 
+
+class TemperaturaIdeal(BaseModel):
+    minima: int
+    maxima: int
+    ideal: int
+
+class Dificuldade(BaseModel):
+    value: float
+    label: str
+
 class Planta(BaseModel):
+    nome: str
     nome_cientifico: str
-    solo_ideal: str
-    ventilacao: str
-    epoca_plantio: str
-    temperatura_ideal: str
-    dias_maturidade: int
+    dificuldade: Dificuldade
+    temperatura_ideal: TemperaturaIdeal
 
 class Ambiente(BaseModel):
     local: str
