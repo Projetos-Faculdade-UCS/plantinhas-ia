@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Literal
+from typing import List, Literal, Optional
 
 
 class TemperaturaIdeal(BaseModel):
@@ -7,9 +7,11 @@ class TemperaturaIdeal(BaseModel):
     maxima: int
     ideal: int
 
+
 class Dificuldade(BaseModel):
     value: float
     label: str
+
 
 class Planta(BaseModel):
     nome: str
@@ -17,9 +19,11 @@ class Planta(BaseModel):
     dificuldade: Dificuldade
     temperatura_ideal: TemperaturaIdeal
 
+
 class Ambiente(BaseModel):
     local: str
     condicao: Literal['interno', 'externo']
+
 
 class EntradaPlantio(BaseModel):
     data_inicio_plantio: str = Field(..., pattern=r"\d{4}-\d{2}-\d{2}")
@@ -30,16 +34,36 @@ class EntradaPlantio(BaseModel):
     informacoes_adicionais: str
     habilidades_existentes: List[str]
 
+
 class Habilidade(BaseModel):
     nome: str
     multiplicador_xp: float
 
+
+class Material(BaseModel):
+    nome: str
+    quantidade: float
+    unidade: str
+
+
+class Etapa(BaseModel):
+    descricao: str
+    ordem: int
+
+
+class Tutorial(BaseModel):
+    materiais: List[Material]
+    etapas: List[Etapa]
+
+
 class Tarefa(BaseModel):
     nome: str
-    tipo: str
+    tipo: Literal['cultivo', 'irrigacao', 'nutricao', 'inspecao', 'poda', 'colheita']
+    frequencia: Literal['semanal', 'diaria', 'mensal', 'trimestral', 'semestral', 'anual', 'unica']
     quantidade_total: int
-    cron: str
     habilidade: Habilidade
+    tutorial: Optional[Tutorial] = None
+
 
 class SaidaPlantio(BaseModel):
     data_fim_plantio: str
