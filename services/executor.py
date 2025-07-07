@@ -29,12 +29,12 @@ Gere o JSON com as seguintes chaves:
     - multiplicador_xp: float (multiplicador de XP para a habilidade)
       - use 1.2 para que a tarefa gere 20% a mais de XP por execução
     - Use como base as habilidades fornecidas no JSON de entrada
-  - tutorial: objeto com as chaves:
+  - tutorial: lista de objetos com as chaves:
     - materiais: objeto com as chaves:
       - nome: string (nome do material)
       - quantidade: float (quantidade necessária)
       - unidade: string (unidade de medida do material)
-    - etapas: objeto com as chaves:
+    - etapas: lista de objetos com as chaves:
       - ordem: inteiro (ordem da etapa)
       - descricao: string (descrição da etapa)
 Exemplo de saída:
@@ -51,18 +51,35 @@ Exemplo de saída:
       "quantidade_total": 1,
       "habilidade": {
         "id": "preparacao_solo",
-        "multiplicador_xp": 1.2
+        "multiplicador_xp": 1.4
       },
       "tutorial": {
-        "materiais": {
-          "nome": "Enxada",
-          "quantidade": 1,
-          "unidade": "unidade"
-        },
-        "etapas": {
-          "ordem": 1,
-          "descricao": "Remover pedras e detritos do solo."
-        }
+        "materiais": [
+          {
+            "nome": "pá comum",
+            "quantidade": 1,
+            "unidade": "unidade"
+          },
+          {
+            "nome": "composto orgânico",
+            "quantidade": 5,
+            "unidade": "kg"
+          }
+        ],
+        "etapas": [
+          {
+            "ordem": 1,
+            "descricao": "Remover pedras e detritos do solo."
+          },
+          {
+            "ordem": 2,
+            "descricao": "Aflorar o solo com a pá."
+          },
+          {
+            "ordem": 3,
+            "descricao": "Adicionar composto orgânico."
+          }
+        ]
       }
     }
   ]
@@ -149,7 +166,7 @@ def transformar_com_geminai(entrada: EntradaPlantio) -> SaidaPlantio:
                     else:
                         normalized_steps.append(step)
                 tut["etapas"] = normalized_steps
-        print(f"Resposta do modelo: {result_json}")
+
         return SaidaPlantio.parse_obj(result_json)
 
     except HTTPException:
