@@ -1,11 +1,6 @@
-from pydantic import BaseModel, Field
 from typing import List, Literal, Optional
 
-
-class TemperaturaIdeal(BaseModel):
-    minima: int
-    maxima: int
-    ideal: int
+from pydantic import BaseModel, Field
 
 
 class Dificuldade(BaseModel):
@@ -17,26 +12,35 @@ class Planta(BaseModel):
     nome: str
     nome_cientifico: str
     dificuldade: Dificuldade
-    temperatura_ideal: TemperaturaIdeal
+    dias_maturidade: int
+    temperatura_minima: str
+    temperatura_maxima: str
+    temperatura_ideal: str
 
 
 class Ambiente(BaseModel):
     local: str
-    condicao: Literal['interno', 'externo']
+    condicao: Literal["interno", "externo"]
+
+
+class Habilidade(BaseModel):
+    id: int
+    nome: str
+    descricao: Optional[str] = None
 
 
 class EntradaPlantio(BaseModel):
     data_inicio_plantio: str = Field(..., pattern=r"\d{4}-\d{2}-\d{2}")
     planta: Planta
     quantidade: int
-    ambiente: Ambiente
+    ambiente: str
     sistemaCultivo: str
     informacoes_adicionais: str
-    habilidades_existentes: List[str]
+    habilidades_existentes: List[Habilidade]
 
 
-class Habilidade(BaseModel):
-    nome: str
+class HabilidadeTarefa(BaseModel):
+    id: str
     multiplicador_xp: float
 
 
@@ -58,15 +62,14 @@ class Tutorial(BaseModel):
 
 class Tarefa(BaseModel):
     nome: str
-    tipo: Literal['cultivo', 'irrigacao', 'nutricao', 'inspecao', 'poda', 'colheita']
-    frequencia: Literal['semanal', 'diaria', 'mensal', 'trimestral', 'semestral', 'anual', 'unica']
+    tipo: Literal["cultivo", "irrigacao", "nutricao", "inspecao", "poda", "colheita"]
+    cron: str
     quantidade_total: int
-    habilidade: Habilidade
+    habilidade: HabilidadeTarefa
     tutorial: Optional[Tutorial] = None
 
 
 class SaidaPlantio(BaseModel):
     data_fim_plantio: str
-    descritivo_como_plantar: str
     informacoes_adicionais: str
     tarefas: List[Tarefa]
