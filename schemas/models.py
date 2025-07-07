@@ -18,11 +18,6 @@ class Planta(BaseModel):
     temperatura_ideal: str
 
 
-class Ambiente(BaseModel):
-    local: str
-    condicao: Literal["interno", "externo"]
-
-
 class Habilidade(BaseModel):
     id: int
     nome: str
