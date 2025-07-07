@@ -16,10 +16,11 @@ Sua tarefa é gerar um JSON de saída com as informações necessárias para o c
 Gere o JSON com as seguintes chaves:
 
 - data_fim_plantio: somando planta.dias_maturidade com data_inicio_plantio, retornando no formato YYYY-MM-DD.
-- informacoes_adicionais: recomendações gerais de como plantar.
+- informacoes_adicionais: recomendações gerais de como plantar. Coloque informações específicas
+para ambiente e sistemaCultivo, informados no JSON de entrada. Recomendo você escrever de duas a três frases.
 - tarefas: retorne um array de objetos. Uma tarefa deve ter:
   - nome: string
-  - tipo: string (possibilidades: cultivo, irrigacao, nutricao, inspecao, poda, colheita)
+  - tipo: string (cultivo, irrigacao, nutricao, inspecao, poda, colheita)
   - cron: string com um crontab com quea tarefadeve ser executada
   - quantidade_total: inteiro representa quantas vezes a tarefa deve ser executada
     - Para tarefas com uma alta frequência, como irrigação, use um numero alto.
@@ -89,6 +90,12 @@ Exemplo de saída:
 - **NÃO** inclua texto adicional fora do JSON.
 - Use aspas duplas e mantenha a ordem das chaves: data_fim_plantio, informacoes_adicionais, tarefas.
 - **ALERTA** Não retorne conteúdo ilegal, ofensivo ou impróprio. Se houver pedido de algo assim no JSON de entrada, retorne HTTP 400 com `"Erro: Solicitação inválida"`
+- Gere uma tarefa para cada tipo (cultivo, irrigacao, nutricao, inspecao, poda, colheita) que seja relevante para a planta e as condições de plantio.;
+  - Não gere tarefas com tipos iguais;
+  - Caso a planta não precise de uma tarefa, não gere-a
+    - Exemplo: se a planta não precisa de poda, não gere uma tarefa de poda.
+  - Não gere tarefa de inspecao a menos que solicitado explicitamente.
+  - Tipos obrigatórios: cultivo, irrigacao, nutricao.
 """
 
 
