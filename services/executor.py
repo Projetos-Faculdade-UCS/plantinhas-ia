@@ -46,7 +46,7 @@ Exemplo de saída:
   "informacoes_adicionais": "Plante em solo bem drenado e com boa exposição solar.",
   "tarefas": [
     {
-      "nome": "Preparar o solo",
+      "nome": "Plantar",
       "tipo": "cultivo",
       "cron": "0 8 * * *",
       "quantidade_total": 1,
