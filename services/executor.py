@@ -13,6 +13,7 @@ You will receive a JSON containing:
 - `plant`: details about a plant species
 - `planting_conditions`: details about the environment and cultivation method
 - `user_skills`: user's current skill levels related to planting
+- `additional_info`: additional information about the planting process
 
 ---
 
@@ -39,6 +40,7 @@ Return a **single JSON** containing:
   - The plant’s specific needs
   - The provided environment (`planting_conditions.environment`)
   - The cultivation system (`planting_conditions.cultivation_system`)
+  - The aditional information provided (`planting_conditions.additional_info`)
 
 ---
 
